@@ -1,0 +1,3743 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Habib Gavi King Kong 3D</title><meta property="og:type" content="website">
+<meta property="og:title" content="Habib Gavi King Kong 3D">
+<meta property="og:description" content="Play Habib Gavi King Kong 3D"><meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Habib Gavi King Kong 3D">
+<meta name="twitter:description" content="Play Habib Gavi King Kong 3D">
+
+<style>
+:root{
+ --bg:#080d15;
+ --panel:rgba(13,19,29,.96);
+ --gold:#ffd36a;
+ --line:rgba(255,255,255,.16);
+ --red:#ff514b;
+ --green:#65e89a;
+}
+
+*{
+ box-sizing:border-box;
+}
+
+html,
+body,
+#game{
+ margin:0;
+ width:100%;
+ height:100%;
+ overflow:hidden;
+ background:#10151f;
+ color:white;
+ font-family:Arial,sans-serif;
+ touch-action:none;
+}
+
+button,
+select,
+input{
+ font-family:inherit;
+}
+
+button{
+ cursor:pointer;
+ touch-action:none;
+}
+
+#game{
+ position:fixed;
+ inset:0;
+}
+
+/* ===== PROFESSIONAL GAME LOADING SCREEN ===== */
+
+#loadingScreen{
+position:fixed;
+inset:0;
+z-index:1000;
+display:none;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+padding:25px;
+overflow:hidden;
+background:
+radial-gradient(ellipse at 50% 35%,#344e70 0%,transparent 48%),
+linear-gradient(145deg,#101c2c,#05080e 85%);
+color:white;
+text-align:center;
+}
+
+#loadingScreen::before{
+content:"";
+position:absolute;
+width:280px;
+height:280px;
+border:1px solid #ffd36a35;
+border-radius:50%;
+box-shadow:
+0 0 0 25px #ffd36a08,
+0 0 0 50px #ffd36a05;
+animation:loadingOrbit 5s linear infinite;
+}
+
+.loadingContent{
+position:relative;
+z-index:2;
+width:100%;
+max-width:360px;
+}
+
+.loadingBadge{
+display:inline-block;
+padding:8px 13px;
+border:1px solid #ffd36a75;
+border-radius:30px;
+color:#ffd36a;
+font-size:10px;
+font-weight:900;
+letter-spacing:3px;
+}
+
+.loadingTitle{
+margin:25px 0 8px;
+font-size:clamp(30px,9vw,43px);
+line-height:1.08;
+font-weight:1000;
+text-shadow:0 0 25px #ffd36a35;
+}
+
+.loadingTitle span{
+color:#ffd36a;
+}
+
+.loadingSubtitle{
+color:#b8c7d9;
+font-size:12px;
+letter-spacing:2px;
+margin-bottom:35px;
+}
+
+.loadingRing{
+width:76px;
+height:76px;
+margin:0 auto 27px;
+border:5px solid #ffffff18;
+border-top-color:#ffd36a;
+border-right-color:#d99b36;
+border-radius:50%;
+animation:loadingSpin 1s linear infinite;
+}
+
+.loadingBarOuter{
+width:100%;
+height:10px;
+padding:2px;
+background:#ffffff18;
+border:1px solid #ffffff30;
+border-radius:20px;
+overflow:hidden;
+}
+
+#loadingBar{
+width:0%;
+height:100%;
+border-radius:20px;
+background:linear-gradient(90deg,#d99b36,#ffe7a4);
+box-shadow:0 0 12px #ffd36a75;
+transition:width .12s linear;
+}
+
+.loadingPercent{
+margin-top:12px;
+display:flex;
+justify-content:space-between;
+font-size:12px;
+font-weight:bold;
+color:#ffd36a;
+}
+
+#loadingStatus{
+min-height:20px;
+margin-top:25px;
+font-size:11px;
+letter-spacing:1px;
+color:#d0d9e5;
+}
+
+.loadingTip{
+margin-top:35px;
+color:#7f91a8;
+font-size:10px;
+line-height:1.8;
+}
+
+@keyframes loadingSpin{
+to{transform:rotate(360deg)}
+}
+
+@keyframes loadingOrbit{
+to{transform:rotate(360deg)}
+}
+
+canvas{
+ display:block;
+}
+
+#home{
+ position:fixed;
+ inset:0;
+ z-index:10;
+ overflow-y:auto;
+ background:
+ radial-gradient(ellipse at 50% 15%,#263e59,transparent 60%),
+ linear-gradient(145deg,#101a28,#070b11 80%);
+}
+
+.topbar{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:8px;
+ padding:12px;
+ background:#080d15ed;
+ border-bottom:1px solid var(--line);
+}
+
+.brand{
+ font-weight:900;
+ font-size:14px;
+ color:var(--gold);
+}
+
+.devButton,
+.menuButton{
+ background:#202d3d;
+ border:1px solid #526276;
+ color:white;
+ border-radius:10px;
+ padding:10px;
+ font-size:11px;
+ font-weight:bold;
+}
+
+.hero{
+ min-height:270px;
+ padding:25px 16px;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ background:radial-gradient(ellipse at center,#344a62,transparent 75%);
+}
+
+.tag{
+ font-size:11px;
+ letter-spacing:3px;
+ color:var(--gold);
+}
+
+.hero h1{
+ font-size:clamp(30px,8vw,46px);
+ line-height:1.05;
+ margin:13px 0;
+}
+
+.hero p{
+ color:#bdc8d5;
+ font-size:13px;
+ line-height:1.8;
+}
+
+.primary{
+ width:100%;
+ padding:16px;
+ border:0;
+ border-radius:12px;
+ background:linear-gradient(100deg,#ffe29a,#d99b36);
+ color:#141414;
+ font-weight:900;
+ font-size:16px;
+ box-shadow:0 5px 0 #754b16;
+}
+
+.section{
+ padding:12px 14px;
+}
+
+.sectionTitle{
+ font-size:12px;
+ color:var(--gold);
+ letter-spacing:1.5px;
+ margin:3px 0 10px;
+}
+
+.grid2{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:9px;
+}
+
+.tile{
+ padding:12px;
+ background:linear-gradient(145deg,#202c3c,#121a25);
+ border:1px solid var(--line);
+ border-radius:12px;
+ min-width:0;
+}
+
+.tile b{
+ display:block;
+ font-size:12px;
+ margin-bottom:8px;
+}
+
+.tile small{
+ font-size:10px;
+ color:#aeb9c8;
+ line-height:1.5;
+}
+
+.select{
+ width:100%;
+ padding:11px 7px;
+ border-radius:8px;
+ color:white;
+ background:#0c121b;
+ border:1px solid #435269;
+ margin-top:5px;
+ font-size:12px;
+}
+
+.story{
+ background:#101722;
+ border:1px solid var(--line);
+ padding:13px;
+ border-radius:12px;
+ font-size:12px;
+ line-height:1.9;
+ color:#d0d8e3;
+}
+
+.story strong{
+ color:var(--gold);
+}
+
+.footer{
+ text-align:center;
+ color:#748093;
+ font-size:10px;
+ padding:18px;
+}
+
+#faceStatus{
+ display:block;
+ color:#b8d3c0;
+ font-size:11px;
+ margin-top:8px;
+ line-height:1.6;
+}
+
+#facePreview{
+ display:none;
+ width:100%;
+ max-height:150px;
+ object-fit:contain;
+ margin-top:10px;
+ border-radius:10px;
+ background:#080b10;
+}
+
+.modal{
+ position:fixed;
+ inset:0;
+ z-index:30;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ background:#000b;
+}
+
+.modalCard{
+ width:100%;
+ max-width:360px;
+ padding:20px;
+ background:#151f2d;
+ border:1px solid #65748b;
+ border-radius:17px;
+ box-shadow:0 20px 70px #000;
+}
+
+.modalCard h2{
+ color:var(--gold);
+ font-size:18px;
+}
+
+.devLine{
+ border-bottom:1px solid var(--line);
+ padding:12px 0;
+ font-size:12px;
+ line-height:1.7;
+}
+
+.developerPhotoBox {
+width: 120px;
+height: 120px;
+margin: 15px auto;
+border-radius: 50%;
+overflow: hidden;
+border: 3px solid #ffd36a;
+box-shadow: 0 0 15px rgba(255,211,106,0.35);
+}
+
+.developerPhoto {
+width: 100%;
+height: 100%;
+display: block;
+object-fit: cover;
+object-position: center;
+}
+
+.closeBtn{
+ width:100%;
+ padding:12px;
+ margin-top:15px;
+ border:0;
+ border-radius:9px;
+ background:#34465c;
+ color:white;
+}
+
+#hud{
+ display:none;
+ position:fixed;
+ top:7px;
+ left:7px;
+ right:7px;
+ z-index:3;
+ justify-content:space-between;
+ gap:5px;
+ pointer-events:none;
+}
+
+.panel{
+ min-width:0;
+ width:32%;
+ padding:7px;
+ background:var(--panel);
+ border:1px solid var(--line);
+ border-radius:10px;
+ font-size:10px;
+}
+
+.bar{
+ height:6px;
+ background:#4b5058;
+ border-radius:5px;
+ overflow:hidden;
+ margin:5px 0;
+}
+
+.fill{
+ height:100%;
+ width:100%;
+ background:var(--green);
+ transition:width .2s, background .2s, box-shadow .2s;
+}
+
+.fill.low-health{
+ background:#ff2525;
+ box-shadow:0 0 8px #ff2525;
+ animation:healthPulse .65s infinite alternate;
+}
+
+@keyframes healthPulse{
+ from{
+  filter:brightness(1);
+ }
+ to{
+  filter:brightness(1.6);
+  box-shadow:0 0 12px #ff2525;
+ }
+}
+
+#enemyFill{
+ background:var(--red);
+}
+
+#hudCenter{
+ text-align:center;
+ width:34%;
+}
+
+#message{
+ position:fixed;
+ top:25%;
+ left:0;
+ right:0;
+ z-index:4;
+ text-align:center;
+ font-size:20px;
+ font-weight:900;
+ text-shadow:0 3px 9px #000;
+ pointer-events:none;
+ padding:0 12px;
+}
+
+#gameButtons{
+ display:none;
+ position:fixed;
+ top:61px;
+ left:8px;
+ right:112px;
+ z-index:5;
+ justify-content:flex-start;
+ gap:5px;
+ pointer-events:none;
+}
+
+.mini{
+ pointer-events:auto;
+ background:#111a27ed;
+ color:white;
+ border:1px solid #ffffff38;
+ border-radius:9px;
+ padding:9px 10px;
+ font-size:10px;
+ font-weight:bold;
+}
+
+#exitGame{
+ display:none;
+ position:fixed;
+ top:60px;
+ right:8px;
+ z-index:7;
+ background:#a93636;
+ border:1px solid #ffaaaa;
+ color:white;
+ padding:10px 12px;
+ border-radius:10px;
+ font-size:10px;
+ font-weight:bold;
+}
+
+#controls{
+ display:none;
+ position:fixed;
+ bottom:13px;
+ left:0;
+ right:0;
+ padding:0 10px;
+ z-index:4;
+ justify-content:space-between;
+ align-items:flex-end;
+ gap:8px;
+ pointer-events:none;
+}
+
+#joystick{
+ width:132px;
+ height:132px;
+ flex:none;
+ position:relative;
+ border-radius:50%;
+ border:2px solid #ffffff55;
+ background:radial-gradient(circle,#344a60dd,#0a101bcc);
+ box-shadow:0 5px 18px #000a,inset 0 0 15px #ffffff16;
+ touch-action:none;
+ pointer-events:auto;
+}
+
+#joystick:before{
+ content:"";
+ position:absolute;
+ left:50%;
+ top:50%;
+ width:7px;
+ height:7px;
+ transform:translate(-50%,-50%);
+ background:#ffffff38;
+ border-radius:50%;
+}
+
+#stick{
+ position:absolute;
+ left:40px;
+ top:40px;
+ width:48px;
+ height:48px;
+ border-radius:50%;
+ pointer-events:none;
+ background:linear-gradient(145deg,#ffe29a,#c58a2d);
+ border:2px solid #fff9;
+ box-shadow:0 3px 10px #000a;
+}
+
+#stick:after{
+ content:"";
+ position:absolute;
+ inset:10px;
+ border-radius:50%;
+ border:1px solid #ffffff70;
+}
+
+.fight{
+ display:grid;
+ grid-template-columns:repeat(2,minmax(60px,76px));
+ gap:8px;
+ pointer-events:auto;
+}
+
+.ctrl{
+ height:52px;
+ border:1px solid #ffffff50;
+ border-radius:15px;
+ background:linear-gradient(145deg,#25374a,#101722);
+ color:white;
+ font-size:10px;
+ font-weight:900;
+ box-shadow:0 4px 0 #0008;
+}
+
+.ctrl:active,
+.ctrl.active{
+ filter:brightness(1.5);
+ transform:translateY(2px);
+}
+
+#punchBtn{
+ background:linear-gradient(145deg,#ffbd65,#a94a20);
+ color:#17100a;
+}
+
+#kickBtn{
+ background:linear-gradient(145deg,#ffe08b,#b27b19);
+ color:#17100a;
+}
+
+#blockBtn{
+ background:linear-gradient(145deg,#5985c3,#20395f);
+}
+
+#dodgeBtn{
+ background:linear-gradient(145deg,#54b7a1,#205c55);
+}
+
+/* ===== GAME OVER DESIGN FIX ===== */
+
+#gameOverPanel {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow-y: auto;
+  background: radial-gradient(circle at center, #35121c 0%, #080a10 75%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.gameOverCard {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  max-width: 370px;
+  padding: 25px 20px;
+  background: linear-gradient(145deg, #27364a, #0b101a);
+  border: 2px solid #ffd36a;
+  border-radius: 23px;
+  text-align: center;
+  box-shadow: 0 0 25px #ff404044, 0 0 45px #000000aa;
+  animation: gameOverPopup 0.4s ease-out;
+}
+
+.gameOverCard h1 {
+  color: #ff515b;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-shadow: 0 0 15px #ff303080;
+  margin: 12px 0 17px;
+}
+
+.gameOverText {
+  color: #ffe4a0;
+  font-size: 14px;
+  line-height: 1.9;
+  margin: 17px 0 22px;
+  padding: 14px;
+  background: #00000055;
+  border: 1px solid #ffffff20;
+  border-radius: 13px;
+}
+
+.actionButton {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 52px;
+  padding: 14px;
+  margin-top: 13px;
+  border-radius: 13px;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.actionButton:active {
+  transform: scale(0.96);
+}
+
+#retryGame {
+  color: #17120a;
+  background: linear-gradient(110deg, #fff0b7, #ffd36a, #d99b36);
+  border: 1px solid #fff0b7;
+  box-shadow: 0 4px 0 #80551b;
+}
+
+#gameOverMenu {
+  color: white;
+  background: linear-gradient(135deg, #40546e, #182231);
+  border: 1px solid #71849c;
+  box-shadow: 0 4px 0 #080d15;
+}
+
+@keyframes gameOverPopup {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-height: 560px) {
+  #gameOverPanel {
+    align-items: flex-start;
+  }
+
+  .gameOverCard {
+    margin: auto;
+    padding: 15px;
+  }
+}
+
+@media(max-width:390px){
+ #joystick{
+  width:112px;
+  height:112px;
+ }
+ #stick{
+  width:44px;
+  height:44px;
+ }
+ .fight{
+  grid-template-columns:repeat(2,60px);
+  gap:6px;
+ }
+ .ctrl{
+  height:47px;
+  font-size:9px;
+ }
+ #gameButtons{
+  top:59px;
+ }
+}
+
+@media(min-width:700px){
+ .hero{
+  padding-left:8%;
+  min-height:330px;
+ }
+ .section{
+  padding-left:8%;
+  padding-right:8%;
+ }
+ #joystick{
+  width:145px;
+  height:145px;
+ }
+ .fight{
+  grid-template-columns:repeat(2,85px);
+ }
+ .ctrl{
+  height:58px;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<div id="game"></div>
+
+<!-- LOADING SCREEN -->
+<div id="loadingScreen">
+
+ <div class="loadingContent">
+
+  <div class="loadingBadge">
+   3D FIGHTING EXPERIENCE
+  </div>
+
+  <h1 class="loadingTitle">
+   HABIB<br>
+   <span>KING KONG</span>
+  </h1>
+
+  <p>ARENA INITIALIZATION</p>
+
+  <div class="loadingRing"></div>
+
+  <div class="loadingBarOuter">
+   <div id="loadingBar"></div>
+  </div>
+
+  <div class="loadingPercent">
+   <span id="loadingStatusPercent">0%</span>
+   <span>PLEASE WAIT</span>
+  </div>
+
+  <div id="loadingStatus">
+   PREPARING ARENA...
+  </div>
+
+  <div class="loadingTip">
+   GET READY FOR THE NEXT FIGHT<br>
+   DEVELOPER: M.M.M.Meherab
+  </div>
+
+ </div>
+
+</div>
+<!-- LOADING SCREEN END -->
+
+<div id="home">
+
+<div class="topbar">
+  <div class="brand">HABIB GAVI 3D</div>  <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+    <a
+      id="installApk"
+      href="https://appdropper.io/habib-kailla-patha-gavi"
+      download="Habib_Gavi_King_Kong_3D.apk"
+      style="
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        gap:4px;
+        background:linear-gradient(100deg,#ffe29a,#d99b36);
+        color:#17120a;
+        border:1px solid #fff0b7;
+        border-radius:10px;
+        padding:10px 8px;
+        font-size:11px;
+        font-weight:900;
+        text-decoration:none;
+        white-space:nowrap;
+      "
+    >📥 INSTALL APK</a><button class="devButton" id="openDev">
+  👨‍💻 DEVELOPER
+</button>
+
+  </div>
+</div>
+
+ <div class="hero">
+  <div class="tag">3D FIGHTING EXPERIENCE</div>
+  <h1>HABIB<br>KING KONG</h1>
+  <p>
+   ফাইটিং এরিনায় প্রবেশ করো।
+   প্রতিপক্ষকে পরাজিত করো।
+   প্রতিটি নতুন রাউন্ডে আরও প্রতিপক্ষের মুখোমুখি হও।
+  </p>
+  <button class="primary" id="enterArena">
+   ⚔ ENTER ARENA
+  </button>
+ </div>
+
+ <div class="section">
+  <div class="sectionTitle">CHARACTER SELECT</div>
+  <div class="grid2">
+
+   <div class="tile">
+    <b>🥊 YOUR FIGHTER</b>
+    <small>নিজের চরিত্র বেছে নাও</small>
+    <select class="select" id="characterSelect">
+     <option value="0">KING KONG</option>
+     <option value="1">MAIGGA</option>
+     <option value="2">GAVI</option>
+     <option value="3">লেদা শুটকি শামসুর ভাই</option>
+     <option value="4">টিকটক আখি আপা</option>
+    </select>
+   </div>
+
+   <div class="tile">
+    <b>🏟 ARENA SELECT</b>
+    <small>এরিনা বেছে নাও</small>
+    <select class="select" id="arenaSelect">
+     <option value="0">CLASSIC ARENA</option>
+     <option value="1">DESERT ARENA</option>
+     <option value="2">NIGHT ARENA</option>
+     <option value="3">FOREST ARENA</option>
+    </select>
+   </div>
+
+  </div>
+ </div>
+
+ <div class="section">
+  <div class="sectionTitle">ENEMY FACE PHOTO</div>
+  <div class="tile">
+   <b>🖼 প্রতিপক্ষের মুখের ছবি</b>
+   <small>
+    
+   </small>
+   <img id="facePreview" alt="Enemy face preview">
+   <span id="faceStatus">enemy_face.png খোঁজা হচ্ছে...</span>
+  </div>
+ </div>
+
+ <div class="section">
+  <div class="sectionTitle">GAME SETTINGS</div>
+
+  <div class="grid2">
+   <div class="tile">
+    <b>🌦 WEATHER</b>
+    <small>আবহাওয়া</small>
+    <select class="select" id="weatherSelect">
+     <option value="clear">Clear Day</option>
+     <option value="rain">Rainy Weather</option>
+     <option value="night">Night Mode</option>
+    </select>
+   </div>
+
+   <div class="tile">
+    <b>🎥 CAMERA VIEW</b>
+    <small>ক্যামেরার অবস্থান</small>
+    <select class="select" id="cameraSelect">
+     <option value="behind">Behind View</option>
+     <option value="top">Top View</option>
+    </select>
+   </div>
+  </div>
+
+  <div class="grid2" style="margin-top:9px">
+   <div class="tile">
+    <b>🔊 BACKGROUND MUSIC</b>
+    <small>ব্যাকগ্রাউন্ড মিউজিক</small>
+    <button class="menuButton" id="musicToggle" style="width:100%;margin-top:10px">
+     MUSIC: ON
+    </button>
+   </div>
+
+   <div class="tile">
+    <b>🌆 ARENA AMBIENCE</b>
+    <small>এরিনার ব্যাকগ্রাউন্ড আওয়াজ</small>
+    <button class="menuButton" id="ambienceToggle" style="width:100%;margin-top:10px">
+     AMBIENCE: ON
+    </button>
+   </div>
+  </div>
+
+  <div class="grid2" style="margin-top:9px">
+   <div class="tile">
+    <b>🔉 EFFECT SOUNDS</b>
+    <small>পাঞ্চ, কিক ও চলাফেরার শব্দ</small>
+    <button class="menuButton" id="soundToggle" style="width:100%;margin-top:10px">
+     SOUND: ON
+    </button>
+   </div>
+
+   <div class="tile">
+    <b>🔊 VOLUME</b>
+    <small>ব্যাকগ্রাউন্ড আওয়াজের ভলিউম</small>
+    <input id="volumeControl" type="range" min="0" max="100" value="55" style="width:100%;margin-top:13px">
+   </div>
+  </div>
+ </div>
+
+ <div class="section">
+  <div class="sectionTitle">THE STORY</div>
+  <div class="story">
+   <strong>হাবিব গাভী কিংকং-এর গল্প</strong><br>
+   হাবিব গাভী কিংকং তার জন্ম বুড়ি গঙ্গার পার থেকে।
+তার বাবা লেদার শুটকি আর সামসু ভাই তাকে একটি ছোট বাচ্চা দেখে তার বাসায় নিয়ে আসে ।
+কিন্তু আজ 14 বছর পর তার বাবার খেয়াল করলেন তার ছেলেটি একটি তৃতীয় লিঙ্গ, বলতে গেলে মাইগা হিজলা।
+এটা দেখে তার মা tiktoker আখি আপা সাথে সাথে শাড়ি পড়ে প্যাড খুলে টিকটক করতে থাকেন😂 !
+  </div>
+ </div>
+
+ <div class="footer">
+  HABIB GAVI KING KONG 3D • MOBILE GAME<br>
+  Developer: M.M.M.Meherab
+ </div>
+
+</div>
+
+<div class="modal" id="devModal">
+ <div class="modalCard">
+  <h2>DEVELOPER INFORMATION</h2>
+<div class="developerPhotoBox">
+  <img
+    id="developerPhoto"
+    src="./developer.png"
+    alt="Developer Photo"
+    class="developerPhoto"
+  >
+</div>
+
+<div id="developerPhotoStatus"
+     style="text-align:center;font-size:11px;color:#ffd36a">
+  Developer photo loading...
+</div>
+
+<script>
+(function(){
+  const photo = document.getElementById('developerPhoto');
+  const status = document.getElementById('developerPhotoStatus');
+
+  if (!photo || !status) return;
+
+  photo.onload = function(){
+    status.textContent = 'Developer photo loaded successfully.';
+    photo.style.display = 'block';
+  };
+
+  photo.onerror = function(){
+    status.textContent =
+      'Photo not found: check developer.png in your project folder.';
+    photo.style.display = 'none';
+  };
+
+  if (photo.complete && photo.naturalWidth > 0) {
+    status.textContent = 'Developer photo loaded successfully.';
+  }
+})();
+</script>
+  <div class="devLine">
+   DEVELOPER NAME<br>
+   <strong>M.M.M.Meherab</strong>
+  </div>
+  <div class="devLine">
+   CLASS<br>
+   <strong>7th</strong>
+  </div>
+  <div class="devLine">
+   APP RELEASE DATE<br>
+   <strong>29/10/2026</strong>
+  </div>
+  <div class="devLine">
+   GAME<br>
+   <strong>Habib Gavi King Kong 3D</strong>
+  </div>
+  <button class="closeBtn" id="closeDev">CLOSE</button>
+ </div>
+</div>
+
+<div id="hud">
+
+ <div class="panel">
+  <span id="playerName">KING KONG</span>
+  <div class="bar">
+   <div id="playerFill" class="fill"></div>
+  </div>
+  <span id="playerHP">HP 100</span>
+ </div>
+
+ <div class="panel" id="hudCenter">
+  ROUND <b id="round">১</b><br>
+  ENEMIES <b id="remaining">১</b>
+ </div>
+
+ <div class="panel">
+  <span>OPPONENT</span>
+  <div class="bar">
+   <div id="enemyFill" class="fill"></div>
+  </div>
+  <span id="enemyHP">HP 100</span>
+ </div>
+
+</div>
+
+<div id="message"></div>
+
+<div id="gameButtons">
+ <button class="mini" id="weatherGame">🌦 WEATHER</button>
+ <button class="mini" id="cameraGame">🎥 CAMERA</button>
+ <button class="mini" id="pauseGame">⏸ PAUSE</button>
+</div>
+
+<button id="exitGame">✕ EXIT ARENA</button>
+
+<div id="controls">
+
+ <div id="joystick" aria-label="Movement joystick">
+  <div id="stick"></div>
+ </div>
+
+ <div class="fight">
+  <button class="ctrl" id="punchBtn" data-act="punch">
+   👊 PUNCH
+  </button>
+  <button class="ctrl" id="kickBtn" data-act="kick">
+   🦵 KICK
+  </button>
+  <button class="ctrl" id="blockBtn" data-act="block">
+   🛡 BLOCK
+  </button>
+  <button class="ctrl" id="dodgeBtn" data-act="dodge">
+   💨 DODGE
+  </button>
+ </div>
+
+</div>
+
+<div id="gameOverPanel">
+ <div class="gameOverCard">
+  <div style="font-size:43px">🥊</div>
+  <h1>GAME OVER</h1>
+  <div style="height:3px;background:#ffd36a;border-radius:5px"></div>
+  <p class="gameOverText">
+   এ কিংকং  গাভী। তোর যোগ্যতা নাই এ মারামারি জিতার, এর থেকে ভালো তুই তোর  tiktok মায়ের, ক্যামেরাম্যান হ আর শাড়ি পড়ে  প্যাক খুলে  টিকটক কর 🤣😂  !
+  </p>
+  <button class="actionButton" id="retryGame">🔄 TRY AGAIN</button>
+  <button class="actionButton" id="gameOverMenu">🏠 MAIN MENU</button>
+ </div>
+</div>
+
+<!-- AUDIO FILES -->
+<audio id="bgMusic" src="./music.mp3" loop preload="auto"></audio>
+<audio id="ambienceAudio" src="./background.mp3" loop preload="auto"></audio>
+<audio id="moveVoice" src="./move.mp3" loop preload="auto"></audio>
+<audio id="backVoice" src="./back.mp3" preload="auto"></audio>
+<audio id="punchAudio" src="./punch.mp3" preload="auto"></audio>
+<audio id="kickAudio" src="./kick.mp3" preload="auto"></audio>
+<audio id="hitAudio" src="./hit.mp3" preload="auto"></audio>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<script>
+(()=>{
+'use strict';
+
+/* =====================================================
+   BASIC REFERENCES
+===================================================== */
+
+const $ = id => document.getElementById(id);
+
+const host = $('game');
+
+const music = $('bgMusic');
+const ambienceAudio = $('ambienceAudio');
+const moveVoice = $('moveVoice');
+const backVoice = $('backVoice');
+const punchAudio = $('punchAudio');
+const kickAudio = $('kickAudio');
+const hitAudio = $('hitAudio');
+
+[
+  music,
+  ambienceAudio,
+  moveVoice,
+  backVoice,
+  punchAudio,
+  kickAudio,
+  hitAudio
+].forEach(audio => {
+  audio.addEventListener('error', () => {
+    console.log(
+      'Audio load error:',
+      audio.id,
+      audio.currentSrc
+    );
+  });
+});
+
+const names = [
+ 'KING KONG',
+ 'MAIGGA',
+ 'GAVI',
+ 'লেদা শুটকি শামসুর ভাই',
+ 'টিকটক আখি আপা'
+];
+
+const shirtColors = [
+ 0x246fca,
+ 0xb8323c,
+ 0x25854b,
+ 0x24272e,
+ 0xd18bcb
+];
+
+const pantsColors = [
+ 0x26313f,
+ 0x34313a,
+ 0x202d27,
+ 0x111318,
+ 0x40303e
+];
+
+/* =====================================================
+   GAME STATE
+===================================================== */
+
+let playing = false;
+let gameOver = false;
+let paused = false;
+let transitioning = false;
+
+let round = 1;
+let last = 0;
+let messageTime = 0;
+
+let enemies = [];
+
+let weather = 'clear';
+let cameraMode = 'behind';
+let arena = 0;
+
+let rain = null;
+let rainVelocity = null;
+
+let musicEnabled = true;
+let ambienceEnabled = true;
+let soundEnabled = true;
+
+let playerCharacter = 0;
+
+let scene;
+let camera;
+let renderer;
+let sun;
+let player;
+
+let arenaFloor = null;
+let arenaDecor = [];
+
+let enemyFaceTexture = null;
+
+let joystickActive = false;
+let joyX = 0;
+let joyY = 0;
+let joyPointer = null;
+
+let ambienceStarted = false;
+
+/* =====================================================
+   GENERAL UTILITIES
+===================================================== */
+
+function say(text,seconds=2){
+ $('message').textContent = text;
+ messageTime = seconds;
+}
+
+function bn(n){
+ return String(n).replace(/[0-9]/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
+}
+
+function mat(color,roughness=.78){
+ return new THREE.MeshStandardMaterial({
+  color,
+  roughness
+ });
+}
+
+function mesh(parent,geometry,material,x=0,y=0,z=0){
+ const object = new THREE.Mesh(geometry,material);
+ object.position.set(x,y,z);
+ parent.add(object);
+ return object;
+}
+
+function box(parent,w,h,d,material,x=0,y=0,z=0){
+ return mesh(
+  parent,
+  new THREE.BoxGeometry(w,h,d),
+  material,
+  x,y,z
+ );
+}
+
+function sphere(parent,r,material,x,y,z,sx=1,sy=1,sz=1){
+ const object = mesh(
+  parent,
+  new THREE.SphereGeometry(r,12,10),
+  material,
+  x,y,z
+ );
+ object.scale.set(sx,sy,sz);
+ return object;
+}
+
+function segment(parent,r,length,material){
+ const group = new THREE.Group();
+
+ parent.add(group);
+
+ mesh(
+  group,
+  new THREE.CylinderGeometry(r*.86,r,length,8),
+  material,
+  0,-length/2,0
+ );
+
+ sphere(
+  group,
+  r,
+  material,
+  0,-length,0
+ );
+
+ return group;
+}
+
+/* =====================================================
+   AUDIO SYSTEM
+===================================================== */
+
+function safePlay(audio,restart=false){
+ if(!audio)return;
+
+ try{
+  if(restart)audio.currentTime=0;
+
+  const result=audio.play();
+
+  if(result&&result.catch){
+   result.catch(()=>{});
+  }
+ }catch(error){}
+}
+
+function stopAudio(audio){
+ if(!audio)return;
+
+ try{
+  audio.pause();
+  audio.currentTime=0;
+ }catch(error){}
+}
+
+/* ===== JOYSTICK DIRECTION AUDIO ===== */
+
+let movementAudioType = '';
+
+function stopMovementAudio(){
+ if(!moveVoice.paused){
+  moveVoice.pause();
+  moveVoice.currentTime=0;
+ }
+
+ if(!backVoice.paused){
+  backVoice.pause();
+  backVoice.currentTime=0;
+ }
+
+ movementAudioType='';
+}
+
+function updateMovementAudio(){
+
+ if(!playing || paused || gameOver || !joystickActive){
+  stopMovementAudio();
+  return;
+ }
+
+ if(!soundEnabled){
+  stopMovementAudio();
+  return;
+ }
+
+ let nextAudio='';
+
+ // Joystick forward
+ if(joyY < -0.35){
+  nextAudio='move';
+ }
+
+ // Joystick backward
+ else if(joyY > 0.35){
+  nextAudio='back';
+ }
+
+ // Left, right, or joystick released
+ else{
+  stopMovementAudio();
+  return;
+ }
+
+ // Don't restart the same audio continuously
+ if(nextAudio===movementAudioType){
+  return;
+ }
+
+ stopMovementAudio();
+
+ movementAudioType=nextAudio;
+
+ if(nextAudio==='move'){
+  safePlay(moveVoice,true);
+ }
+
+ else if(nextAudio==='back'){
+  safePlay(backVoice,true);
+ }
+}
+
+function unlockAudio(){
+ [
+  music,
+  ambienceAudio,
+  moveVoice,
+  backVoice,
+  punchAudio,
+  kickAudio,
+  hitAudio
+ ].forEach(audio=>{
+  try{
+   audio.load();
+  }catch(error){}
+ });
+}
+
+function updateAudioVolume(){
+ const volume = Number($('volumeControl').value)/100;
+
+ music.volume = volume*.7;
+ ambienceAudio.volume = volume*.45;
+ moveVoice.volume = volume*.55;
+
+ backVoice.volume = volume*.8;
+ punchAudio.volume = volume*.8;
+ kickAudio.volume = volume*.8;
+ hitAudio.volume = volume*.8;
+}
+
+function startGameAudio(){
+ updateAudioVolume();
+
+ if(musicEnabled){
+  safePlay(music);
+ }
+
+ if(ambienceEnabled){
+  safePlay(ambienceAudio);
+  ambienceStarted=true;
+ }
+}
+
+function stopGameAudio(){
+ stopAudio(music);
+ stopAudio(ambienceAudio);
+ stopAudio(moveVoice);
+ 
+
+ ambienceStarted=false;
+}
+
+function playEffect(audio){
+ if(!soundEnabled)return;
+
+ safePlay(audio,true);
+}
+
+/* =====================================================
+   PROCEDURAL INTERFACE AUDIO
+   No external sound files required
+===================================================== */
+
+let interfaceAudioContext = null;
+let lastVolumeSound = 0;
+
+function getInterfaceAudioContext(){
+ try{
+  const AudioContextClass =
+   window.AudioContext || window.webkitAudioContext;
+
+  if(!AudioContextClass)return null;
+
+  if(!interfaceAudioContext){
+   interfaceAudioContext = new AudioContextClass();
+  }
+
+  if(interfaceAudioContext.state === 'suspended'){
+   interfaceAudioContext.resume().catch(()=>{});
+  }
+
+  return interfaceAudioContext;
+
+ }catch(error){
+  return null;
+ }
+} // গুরুত্বপূর্ণ: এই বন্ধনীটি আগে বাদ পড়েছিল!
+
+function interfaceTone(frequency,duration,type,volume,delay=0){
+ const ctx = getInterfaceAudioContext();
+
+ if(!ctx)return;
+
+ try{
+  const oscillator = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const startTime = ctx.currentTime + delay;
+
+  oscillator.type = type;
+  oscillator.frequency.setValueAtTime(frequency,startTime);
+
+  gain.gain.setValueAtTime(0.001,startTime);
+
+  gain.gain.exponentialRampToValueAtTime(
+   Math.max(0.002,volume),
+   startTime+0.012
+  );
+
+  gain.gain.exponentialRampToValueAtTime(
+   0.001,
+   startTime+duration
+  );
+
+  oscillator.connect(gain);
+  gain.connect(ctx.destination);
+
+  oscillator.start(startTime);
+  oscillator.stop(startTime+duration+0.02);
+
+ }catch(error){}
+}
+
+function playInterfaceSound(type='click'){
+ if(!soundEnabled && type!=='toggle')return;
+
+ const slider=$('volumeControl');
+
+ const masterVolume=Math.max(
+  0,
+  Math.min(1,Number(slider.value)/100)
+ );
+
+ if(masterVolume<=0)return;
+
+ const volume=masterVolume*0.13;
+
+ switch(type){
+
+  case 'start':
+   interfaceTone(330,.16,'sine',volume);
+   interfaceTone(440,.20,'sine',volume,.10);
+   interfaceTone(660,.28,'sine',volume,.22);
+   break;
+
+  case 'developer':
+   interfaceTone(660,.07,'sine',volume);
+   interfaceTone(880,.09,'sine',volume,.07);
+   break;
+
+  case 'select':
+   interfaceTone(560,.075,'sine',volume);
+   interfaceTone(740,.07,'sine',volume,.055);
+   break;
+
+  case 'toggle':
+   interfaceTone(520,.07,'triangle',volume);
+   interfaceTone(780,.09,'triangle',volume,.06);
+   break;
+
+  case 'back':
+   interfaceTone(520,.08,'sine',volume);
+   interfaceTone(350,.12,'sine',volume,.07);
+   break;
+
+  case 'fight':
+   interfaceTone(220,.10,'triangle',volume);
+   interfaceTone(440,.14,'sawtooth',volume*.55,.08);
+   break;
+
+  case 'pause':
+   interfaceTone(440,.09,'triangle',volume);
+   break;
+
+  default:
+   interfaceTone(700,.055,'sine',volume*.8);
+   break;
+ }
+}
+
+/* প্রথম স্পর্শে অডিও চালু করার প্রস্তুতি */
+document.addEventListener('pointerdown',()=>{
+ getInterfaceAudioContext();
+},{once:true});
+
+/* সব ইন্টারফেস বাটনের সাউন্ড */
+document.addEventListener('click',function(event){
+ const button=event.target.closest('button');
+
+ if(!button)return;
+
+ // Punch, Kick, Block ও Dodge-এর পুরোনো সিস্টেম থাকবে
+ if(button.hasAttribute('data-act'))return;
+
+ const id=button.id;
+
+ if(id==='enterArena'){
+  playInterfaceSound('start');
+ }
+ else if(id==='openDev'){
+  playInterfaceSound('developer');
+ }
+ else if(id==='closeDev' ||
+         id==='gameOverMenu' ||
+         id==='exitGame'){
+  playInterfaceSound('back');
+ }
+ else if(id==='musicToggle' ||
+         id==='ambienceToggle' ||
+         id==='soundToggle'){
+  playInterfaceSound('toggle');
+ }
+ else if(id==='retryGame'){
+  playInterfaceSound('fight');
+ }
+ else if(id==='pauseGame'){
+  playInterfaceSound('pause');
+ }
+ else if(id==='weatherGame' ||
+         id==='cameraGame'){
+  playInterfaceSound('select');
+ }
+ else{
+  playInterfaceSound('click');
+ }
+},true);
+
+/* Dropdown সিলেক্ট করলে সাউন্ড */
+[
+ 'characterSelect',
+ 'arenaSelect',
+ 'weatherSelect',
+ 'cameraSelect'
+].forEach(id=>{
+ const element=$(id);
+
+ if(element){
+  element.addEventListener('change',()=>{
+   playInterfaceSound('select');
+  });
+ }
+});
+
+/* Volume পরিবর্তনের সময় হালকা সাউন্ড */
+$('volumeControl').addEventListener('input',()=>{
+ const now=performance.now();
+
+ if(now-lastVolumeSound<180)return;
+
+ lastVolumeSound=now;
+ playInterfaceSound('click');
+});
+
+$('volumeControl').addEventListener('input',updateAudioVolume);
+
+$('musicToggle').onclick=()=>{
+ unlockAudio();
+
+ musicEnabled=!musicEnabled;
+
+ $('musicToggle').textContent=
+  'MUSIC: '+(musicEnabled?'ON':'OFF');
+
+ if(musicEnabled&&playing&&!paused){
+  safePlay(music);
+ }else{
+  stopAudio(music);
+ }
+};
+
+$('ambienceToggle').onclick=()=>{
+ unlockAudio();
+
+ ambienceEnabled=!ambienceEnabled;
+
+ $('ambienceToggle').textContent=
+  'AMBIENCE: '+(ambienceEnabled?'ON':'OFF');
+
+ if(ambienceEnabled&&playing&&!paused){
+  safePlay(ambienceAudio);
+  ambienceStarted=true;
+ }else{
+  stopAudio(ambienceAudio);
+  ambienceStarted=false;
+ }
+};
+
+$('soundToggle').onclick=()=>{
+ soundEnabled=!soundEnabled;
+
+ $('soundToggle').textContent=
+  'SOUND: '+(soundEnabled?'ON':'OFF');
+
+ if(!soundEnabled){
+  stopAudio(moveVoice);
+ }
+};
+
+/* =====================================================
+   DEVELOPER MODAL
+===================================================== */
+
+$('openDev').onclick=()=>{
+ $('devModal').style.display='flex';
+};
+
+$('closeDev').onclick=()=>{
+ $('devModal').style.display='none';
+};
+
+$('devModal').onclick=e=>{
+ if(e.target===$('devModal')){
+  $('devModal').style.display='none';
+ }
+};
+
+/* =====================================================
+   THREE.JS INITIALIZATION
+===================================================== */
+
+if(!window.THREE){
+ $('enterArena').disabled=true;
+ $('enterArena').textContent='INTERNET CONNECTION REQUIRED';
+ say('Three.js লোড করতে ইন্টারনেট চালু করো।',10);
+ return;
+}
+
+scene = new THREE.Scene();
+
+scene.background = new THREE.Color(0x8494a5);
+
+scene.fog = new THREE.Fog(
+ 0x8494a5,
+ 38,
+  85
+);
+
+camera = new THREE.PerspectiveCamera(
+ 55,
+ innerWidth/innerHeight,
+ .1,
+ 140
+);
+
+camera.position.set(0,5,12);
+
+renderer = new THREE.WebGLRenderer({
+ antialias:false,
+ powerPreference:'high-performance'
+});
+
+renderer.setSize(innerWidth,innerHeight);
+
+renderer.setPixelRatio(
+ Math.min(devicePixelRatio||1,1.1)
+);
+
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+host.appendChild(renderer.domElement);
+
+scene.add(
+ new THREE.HemisphereLight(
+  0xe2edff,
+  0x373c45,
+  1.65
+ )
+);
+
+sun = new THREE.DirectionalLight(
+ 0xffe5bf,
+ 1.8
+);
+
+sun.position.set(-9,17,9);
+
+scene.add(sun);
+
+/* =====================================================
+   SHARED MATERIALS
+===================================================== */
+
+const skinMat = mat(0xc99570,.65);
+const shoeMat = mat(0x111419);
+const eyeMat = mat(0x181818);
+const railMat = mat(0xb2bbc4,.5);
+
+/* =====================================================
+   ENEMY FACE TEXTURE
+   enemy_face.png শুধু Enemy-দের মুখে বসবে।
+   Player-এর মুখে এই texture বসানো হবে না।
+===================================================== */
+
+function loadEnemyFace(){
+ const loader = new THREE.TextureLoader();
+
+ loader.load(
+  './enemy_face.png',
+
+  texture=>{
+   texture.colorSpace=THREE.SRGBColorSpace;
+
+   enemyFaceTexture=texture;
+
+   $('faceStatus').textContent=
+    'Enemy face image loaded successfully.';
+
+   $('facePreview').src='./enemy_face.png';
+   $('facePreview').style.display='block';
+
+   enemies.forEach(enemy=>{
+    applyEnemyFace(enemy);
+   });
+  },
+
+  undefined,
+
+  ()=>{
+   $('faceStatus').textContent=
+    'enemy_face.png পাওয়া যায়নি। ফাইলটি index.html-এর পাশে রাখো।';
+  }
+ );
+}
+
+function applyEnemyFace(fighter){
+ if(!fighter)return;
+ if(fighter.isPlayer)return;
+ if(!fighter.facePlane)return;
+ if(!enemyFaceTexture)return;
+
+ const material=fighter.facePlane.material;
+
+ material.map=enemyFaceTexture;
+ material.color.set(0xffffff);
+ material.transparent=true;
+ material.opacity=1;
+ material.depthTest=false;
+ material.depthWrite=false;
+ material.needsUpdate=true;
+
+ fighter.facePlane.position.z=.245;
+ fighter.facePlane.visible=true;
+ fighter.facePlane.renderOrder=10;
+}
+
+/* =====================================================
+   ARENA CLEANUP
+===================================================== */
+
+function clearDecor(){
+ arenaDecor.forEach(object=>{
+  scene.remove(object);
+
+  object.traverse(node=>{
+   if(node.geometry){
+    node.geometry.dispose();
+   }
+  });
+ });
+
+ arenaDecor=[];
+}
+
+function addDecor(object){
+ scene.add(object);
+ arenaDecor.push(object);
+
+ return object;
+}
+
+/* =====================================================
+   ARENA GENERATION
+===================================================== */
+
+function createArena(){
+ clearDecor();
+
+ if(arenaFloor){
+  scene.remove(arenaFloor);
+
+  arenaFloor.geometry.dispose();
+
+  arenaFloor.material.dispose();
+ }
+
+ const colors=[
+  0x747b83,
+  0xb49b72,
+  0x45475e,
+  0x496849
+ ];
+
+ arenaFloor=mesh(
+  scene,
+  new THREE.CircleGeometry(18,40),
+  mat(colors[arena]),
+  0,-.08,0
+ );
+
+ arenaFloor.rotation.x=-Math.PI/2;
+
+ /* Floor rings */
+
+ for(let r=4;r<=16;r+=2){
+  const ring=mesh(
+   scene,
+   new THREE.RingGeometry(r-.025,r+.025,40),
+   mat(r%4===0?0xc3c8ce:0x515963),
+   0,.015,0
+  );
+
+  ring.rotation.x=-Math.PI/2;
+
+  addDecor(ring);
+ }
+
+ /* Arena fence */
+
+ for(let i=0;i<32;i++){
+  const angle=i/32*Math.PI*2;
+
+  addDecor(
+   mesh(
+    scene,
+    new THREE.CylinderGeometry(.09,.11,1.3,6),
+    railMat,
+    Math.cos(angle)*18,
+    .65,
+    Math.sin(angle)*18
+   )
+  );
+ }
+
+ /* Horizontal rails */
+
+ for(const y of [.3,.72,1.15]){
+  const rail=mesh(
+   scene,
+   new THREE.TorusGeometry(18,.05,4,40),
+   railMat,
+   0,y,0
+  );
+
+  rail.rotation.x=Math.PI/2;
+
+  addDecor(rail);
+ }
+
+ /* Desert scenery */
+
+ if(arena===1){
+  const sand=mat(0xd1b17b);
+
+  for(let i=0;i<8;i++){
+   const x=(Math.random()-.5)*42;
+   const z=(Math.random()-.5)*42;
+
+   if(Math.hypot(x,z)<19)continue;
+
+   addDecor(
+    mesh(
+     scene,
+     new THREE.DodecahedronGeometry(.6,0),
+     sand,
+     x,.25,z
+    )
+   );
+  }
+ }
+
+ /* Forest scenery */
+
+ if(arena===3){
+  const green=mat(0x254c2e);
+  const wood=mat(0x55412b);
+
+  for(let i=0;i<20;i++){
+   const angle=i/20*Math.PI*2;
+
+   const tree=new THREE.Group();
+
+   tree.position.set(
+    Math.cos(angle)*21,
+    0,
+    Math.sin(angle)*21
+   );
+
+   mesh(
+    tree,
+    new THREE.CylinderGeometry(.15,.22,1.4,5),
+    wood,
+    0,.7,0
+   );
+
+   sphere(
+    tree,
+    .85,
+    green,
+    0,1.6,0,
+    1,1.25,1
+   );
+
+   addDecor(tree);
+  }
+ }
+
+ /* Night lights */
+
+ if(arena===2){
+  const lightMat=mat(0x9aabff,.3);
+
+  for(let i=0;i<8;i++){
+   const angle=i/8*Math.PI*2;
+
+   addDecor(
+    mesh(
+     scene,
+     new THREE.SphereGeometry(.22,7,5),
+     lightMat,
+     Math.cos(angle)*20,
+     3,
+     Math.sin(angle)*20
+    )
+   );
+  }
+ }
+
+ /* Spectators */
+
+ const crowd=new THREE.Group();
+
+ scene.add(crowd);
+
+ arenaDecor.push(crowd);
+
+ const crowdMats=[
+  mat(0x345b88),
+  mat(0x9b4545),
+  mat(0xd3a85e),
+  mat(0x497354)
+ ];
+
+ for(let row=0;row<2;row++){
+  const radius=19.2+row*.9;
+  const count=28+row*8;
+
+  for(let i=0;i<count;i++){
+   const angle=i/count*Math.PI*2;
+
+   const person=new THREE.Group();
+
+   person.position.set(
+    Math.cos(angle)*radius,
+    .35+row*.2,
+    Math.sin(angle)*radius
+   );
+
+   person.rotation.y=-angle+Math.PI/2;
+
+   sphere(
+    person,.11,skinMat,
+    0,.37,0,
+    .8,1,.8
+   );
+
+   box(
+    person,.22,.28,.14,
+    crowdMats[(i+row)%crowdMats.length],
+    0,.13,0
+   );
+
+   crowd.add(person);
+  }
+ }
+}
+
+function setArena(value,announce=true){
+ arena=Math.max(0,Math.min(3,Number(value)||0));
+
+ createArena();
+
+ if(announce){
+  say(
+   ['CLASSIC ARENA','DESERT ARENA','NIGHT ARENA','FOREST ARENA'][arena],
+   1.4
+  );
+ }
+}
+
+$('arenaSelect').onchange=e=>{
+ setArena(e.target.value);
+};
+
+/* =====================================================
+   WEATHER
+===================================================== */
+
+function setWeather(value,announce=true){
+ weather=value;
+
+ if(rain){
+  scene.remove(rain);
+
+  rain.geometry.dispose();
+  rain.material.dispose();
+
+  rain=null;
+  rainVelocity=null;
+ }
+
+ if(value==='clear'){
+  const background=
+   arena===2?0x515a70:
+   arena===1?0xc8a775:
+   arena===3?0x536e5b:
+   0x8494a5;
+
+  scene.background.set(background);
+  scene.fog.color.set(background);
+
+  scene.fog.near=38;
+  scene.fog.far=85;
+
+  sun.intensity=1.8;
+ }
+
+ else if(value==='night'){
+  scene.background.set(0x10182d);
+  scene.fog.color.set(0x10182d);
+
+  scene.fog.near=25;
+  scene.fog.far=70;
+
+  sun.intensity=.45;
+ }
+
+ else{
+  scene.background.set(0x53616d);
+  scene.fog.color.set(0x53616d);
+
+  scene.fog.near=22;
+  scene.fog.far=65;
+
+  sun.intensity=.8;
+
+  const count=180;
+
+  const positions=new Float32Array(count*3);
+
+  rainVelocity=new Float32Array(count);
+
+  for(let i=0;i<count;i++){
+   positions[i*3]=(Math.random()-.5)*35;
+   positions[i*3+1]=Math.random()*18;
+   positions[i*3+2]=(Math.random()-.5)*35;
+
+   rainVelocity[i]=8+Math.random()*8;
+  }
+
+  const geometry=new THREE.BufferGeometry();
+
+  geometry.setAttribute(
+   'position',
+   new THREE.BufferAttribute(positions,3)
+  );
+
+  rain=new THREE.Points(
+   geometry,
+   new THREE.PointsMaterial({
+    color:0xcfe5ff,
+    size:.06,
+    transparent:true,
+    opacity:.7
+   })
+  );
+
+  scene.add(rain);
+ }
+
+ $('weatherSelect').value=value;
+
+ if(announce){
+  say(
+   value==='rain'?'RAINY WEATHER':
+   value==='night'?'NIGHT MODE':
+   'CLEAR DAY',
+   1.2
+  );
+ }
+}
+
+$('weatherSelect').onchange=e=>{
+ setWeather(e.target.value);
+};
+
+$('weatherGame').onclick=()=>{
+ const options=['clear','rain','night'];
+
+ const index=options.indexOf(weather);
+
+ setWeather(options[(index+1)%options.length]);
+};
+
+/* =====================================================
+   CAMERA MODE
+===================================================== */
+
+function setCameraMode(value,announce=true){
+ cameraMode=value;
+
+ $('cameraSelect').value=value;
+
+ if(announce){
+  say(value==='top'?'TOP VIEW':'BEHIND VIEW',1.2);
+ }
+}
+
+$('cameraSelect').onchange=e=>{
+ setCameraMode(e.target.value);
+};
+
+$('cameraGame').onclick=()=>{
+ setCameraMode(
+  cameraMode==='behind'?'top':'behind'
+ );
+};
+
+/* =====================================================
+   FIGHTER MODEL
+===================================================== */
+
+function createFighter(isPlayer,characterIndex=0){
+ const root=new THREE.Group();
+ const body=new THREE.Group();
+
+ root.add(body);
+
+ scene.add(root);
+
+ const index=characterIndex%5;
+
+ const shirt=mat(shirtColors[index],.7);
+ const pants=mat(pantsColors[index],.8);
+
+ const hair=mat(
+  index===4?0x25172a:0x29221d
+ );
+
+ const limbs={};
+
+ /* Body */
+
+ sphere(
+  body,.34,shirt,
+  0,1.38,0,
+  1.05,1.18,.72
+ );
+
+ box(
+  body,.51,.22,.36,
+  pants,
+  0,1.02,0
+ );
+
+ mesh(
+  body,
+  new THREE.CylinderGeometry(.32,.30,.18,10),
+  shirt,
+  0,1.08,0
+ );
+
+ /* Neck */
+
+ mesh(
+  body,
+  new THREE.CylinderGeometry(.105,.12,.17,8),
+  skinMat,
+  0,1.94,0
+ );
+
+ /* Head */
+
+ sphere(
+  body,.235,skinMat,
+  0,2.18,0,
+  .9,1.06,.9
+ );
+
+ /* Ears */
+
+ sphere(body,.05,skinMat,-.225,2.17,0);
+ sphere(body,.05,skinMat,.225,2.17,0);
+
+ /* Eyes */
+
+ sphere(body,.032,eyeMat,-.085,2.22,.2);
+ sphere(body,.032,eyeMat,.085,2.22,.2);
+
+ /* Hair */
+
+ sphere(
+  body,.238,hair,
+  0,2.32,-.015,
+  .97,.45,.93
+ );
+
+ /*
+  Enemy face plane:
+  Only enemies receive enemy_face.png.
+  Player face stays the original model face.
+ */
+
+ let facePlane=null;
+
+ if(!isPlayer){
+  const faceMaterial=new THREE.MeshBasicMaterial({
+   color:0xffffff,
+   transparent:true,
+   opacity:1,
+   side:THREE.DoubleSide,
+   depthWrite:false
+  });
+
+  facePlane=mesh(
+   body,
+   new THREE.PlaneGeometry(.34,.43),
+   faceMaterial,
+   0,2.18,.214
+  );
+
+  facePlane.renderOrder=3;
+
+  facePlane.visible=false;
+ }
+
+ /* Arms and legs */
+
+ for(const side of ['L','R']){
+  const sign=side==='L'?-1:1;
+
+  const shoulder=new THREE.Group();
+
+  shoulder.position.set(
+   sign*.40,
+   1.64,
+   0
+  );
+
+  body.add(shoulder);
+
+  sphere(
+   shoulder,.135,shirt,
+   0,0,0
+  );
+
+  segment(
+   shoulder,.105,.31,shirt
+  );
+
+  const elbow=new THREE.Group();
+
+  elbow.position.y=-.30;
+
+  shoulder.add(elbow);
+
+  sphere(
+   elbow,.08,skinMat,
+   0,0,0
+  );
+
+  segment(
+   elbow,.075,.30,skinMat
+  );
+
+  sphere(
+   elbow,.09,skinMat,
+   0,-.31,.015
+  );
+
+  limbs['shoulder'+side]=shoulder;
+  limbs['elbow'+side]=elbow;
+
+  const hip=new THREE.Group();
+
+  hip.position.set(
+   sign*.17,
+   1.00,
+   0
+  );
+
+  body.add(hip);
+
+  segment(
+   hip,.145,.36,pants
+  );
+
+  const knee=new THREE.Group();
+
+  knee.position.y=-.36;
+
+  hip.add(knee);
+
+  sphere(
+   knee,.105,pants,
+   0,0,0
+  );
+
+  segment(
+   knee,.095,.35,pants
+  );
+
+  box(
+   knee,.19,.12,.29,
+   shoeMat,
+   0,-.36,.075
+  );
+
+  limbs['hip'+side]=hip;
+  limbs['knee'+side]=knee;
+ }
+
+ const fighter={
+  root,
+  body,
+  limbs,
+  isPlayer,
+  index,
+  facePlane,
+  hp:100,
+  action:'idle',
+  actionTime:0,
+  cooldown:0,
+  dead:false,
+  blocking:false,
+  phase:Math.random()*6,
+  shirt,
+  pants,
+  hair,
+
+  // নতুন পতনের অ্যানিমেশনের ভেরিয়েবল
+  fallProgress:0,
+  fallSide:1,
+  fallStartY:0,
+  fallStartRotation:0
+};
+
+ if(!isPlayer){
+  applyEnemyFace(fighter);
+ }
+
+ return fighter;
+}
+
+/* =====================================================
+   FIGHTER CLEANUP
+===================================================== */
+
+function disposeFighter(fighter){
+ if(!fighter)return;
+
+ scene.remove(fighter.root);
+
+ fighter.root.traverse(object=>{
+  if(object.geometry){
+   object.geometry.dispose();
+  }
+
+  if(object.material){
+   const materials=Array.isArray(object.material)
+    ?object.material
+    :[object.material];
+
+   materials.forEach(material=>{
+    if(
+     material!==skinMat &&
+     material!==eyeMat &&
+     material!==shoeMat &&
+     material.map!==enemyFaceTexture
+    ){
+     material.dispose();
+    }
+   });
+  }
+ });
+}
+
+/* =====================================================
+   POSITION HELPERS
+===================================================== */
+
+function clamp(fighter){
+ const radius=Math.hypot(
+  fighter.root.position.x,
+  fighter.root.position.z
+ );
+
+ if(radius>16){
+  fighter.root.position.x*=16/radius;
+  fighter.root.position.z*=16/radius;
+ }
+}
+
+function face(fighter,target){
+ fighter.root.rotation.y=Math.atan2(
+  target.root.position.x-fighter.root.position.x,
+  target.root.position.z-fighter.root.position.z
+ );
+}
+
+function nearestEnemy(){
+ let found=null;
+ let best=Infinity;
+
+ for(const enemy of enemies){
+  if(enemy.dead)continue;
+
+  const distance=enemy.root.position.distanceTo(
+   player.root.position
+  );
+
+  if(distance<best){
+   best=distance;
+   found=enemy;
+  }
+ }
+
+ return found;
+}
+
+/* =====================================================
+   PLAYER CREATION
+===================================================== */
+
+playerCharacter=Number($('characterSelect').value);
+
+player=createFighter(true,playerCharacter);
+
+player.root.position.set(0,0,5);
+
+player.root.rotation.y=Math.PI;
+
+$('characterSelect').onchange=e=>{
+ playerCharacter=Number(e.target.value);
+
+ if(player){
+  const oldPosition=player.root.position.clone();
+  const oldRotation=player.root.rotation.y;
+
+  disposeFighter(player);
+
+  player=createFighter(
+   true,
+   playerCharacter
+  );
+
+  player.root.position.copy(oldPosition);
+  player.root.rotation.y=oldRotation;
+ }
+
+ $('playerName').textContent=names[playerCharacter];
+};
+
+/* =====================================================
+   HUD UPDATE
+===================================================== */
+
+function updateHUD(){
+
+ const playerFill=$('playerFill');
+ const enemyFill=$('enemyFill');
+
+ const playerHP=Math.max(0,Math.min(100,player.hp));
+
+ // Player Health Bar
+ playerFill.style.width=playerHP+'%';
+
+ playerFill.classList.toggle(
+  'low-health',
+  playerHP>0 && playerHP<=20
+ );
+
+ $('playerHP').textContent=
+  'HP '+Math.ceil(playerHP);
+
+ // Nearest Enemy Health Bar
+ const enemy=nearestEnemy();
+
+ if(enemy){
+
+  const enemyHP=Math.max(0,Math.min(100,enemy.hp));
+
+  enemyFill.style.width=enemyHP+'%';
+
+  enemyFill.classList.toggle(
+   'low-health',
+   enemyHP>0 && enemyHP<=20
+  );
+
+  $('enemyHP').textContent=
+   'HP '+Math.ceil(enemyHP);
+
+ }else{
+
+  enemyFill.style.width='0%';
+  enemyFill.classList.remove('low-health');
+
+  $('enemyHP').textContent='CLEAR';
+ }
+
+ // Remaining Enemies
+ $('remaining').textContent=bn(
+  enemies.filter(enemy=>!enemy.dead).length
+ );
+
+ $('playerName').textContent=
+  names[playerCharacter];
+}
+
+/* =====================================================
+   ROUND GENERATION
+===================================================== */
+
+function spawnRound(){
+ enemies.forEach(disposeFighter);
+
+ enemies=[];
+
+ transitioning=false;
+ gameOver=false;
+ paused=false;
+ playing=true;
+
+ player.hp=100;
+ player.blocking=false;
+ player.action='idle';
+ player.actionTime=0;
+ player.cooldown=0;
+
+ player.root.position.set(0,0,5);
+ player.root.rotation.y=Math.PI;
+
+ /*
+  Round 1: one enemy.
+  Round 2: two enemies.
+  Round 3: three enemies.
+  The count increases every round.
+ */
+
+ for(let i=0;i<round;i++){
+  const enemy=createFighter(
+   false,
+   (i+round)%5
+  );
+
+  const angle=i/round*Math.PI*2;
+
+  const radius=round===1
+   ?4.3
+   :Math.min(6+round*.25,12);
+
+  enemy.root.position.set(
+   Math.cos(angle)*radius,
+   0,
+   Math.sin(angle)*radius-1
+  );
+
+  face(enemy,player);
+
+  enemies.push(enemy);
+ }
+
+ $('round').textContent=bn(round);
+
+ updateHUD();
+
+ say(
+  bn(round)+' জন Habib King Kong জন্ম নিয়েছে!',
+  2.3
+ );
+}
+
+/* =====================================================
+   GAME OVER
+===================================================== */
+
+function finishGame(){
+ if(gameOver)return;
+
+ player.hp=0;
+
+ gameOver=true;
+ playing=false;
+ paused=false;
+ transitioning=false;
+
+ player.blocking=false;
+
+ $('gameOverPanel').style.display='flex';
+
+ $('playerFill').style.width='0%';
+ $('playerHP').textContent='HP 0';
+
+ stopGameAudio();
+}
+
+/* =====================================================
+   PLAYER FIGHTING
+===================================================== */
+
+function doAction(action){
+ if(
+  !playing ||
+  gameOver ||
+  paused ||
+  transitioning
+ )return;
+
+ if(action==='block'){
+  player.blocking=true;
+  player.action='block';
+  player.actionTime=.25;
+  return;
+ }
+
+ if(action==='dodge'){
+  player.action='dodge';
+  player.actionTime=.35;
+
+  const angle=player.root.rotation.y;
+
+  player.root.position.x-=
+   Math.sin(angle)*1.1;
+
+  player.root.position.z-=
+   Math.cos(angle)*1.1;
+
+  clamp(player);
+
+  return;
+ }
+
+ if(
+  action!=='punch' &&
+  action!=='kick'
+ )return;
+
+ if(player.cooldown>0)return;
+
+ player.cooldown=.48;
+ player.action=action;
+ player.actionTime=.4;
+
+ const enemy=nearestEnemy();
+
+ if(!enemy)return;
+
+ const distance=enemy.root.position.distanceTo(
+  player.root.position
+ );
+
+ if(distance>3.15){
+  say('প্রতিপক্ষের কাছে যাও!',.8);
+  return;
+ }
+
+ const direction=enemy.root.position.clone()
+  .sub(player.root.position)
+  .normalize();
+
+ const angle=player.root.rotation.y;
+
+ const forward=new THREE.Vector3(
+  Math.sin(angle),
+  0,
+  Math.cos(angle)
+ );
+
+ if(forward.dot(direction)<.15){
+  say('প্রতিপক্ষের দিকে ঘুরে দাঁড়াও!',.8);
+  return;
+ }
+
+ const damage=action==='kick'?27:19;
+
+ enemy.hp-=damage;
+
+ enemy.action='hurt';
+ enemy.actionTime=.28;
+
+ playEffect(
+  action==='kick'?kickAudio:punchAudio
+ );
+
+ const away=enemy.root.position.clone()
+  .sub(player.root.position);
+
+ away.y=0;
+
+ if(away.lengthSq()>0){
+  enemy.root.position.addScaledVector(
+   away.normalize(),
+   .45
+  );
+ }
+
+if(enemy.hp<=0 && !enemy.dead){
+
+  enemy.hp=0;
+  enemy.dead=true;
+  enemy.action='fall';
+  enemy.actionTime=1.6;
+
+  // পতনের অ্যানিমেশন শূন্য থেকে শুরু
+  enemy.fallProgress=0;
+
+  // পাশ পরিবর্তন করে পড়ার দিক নির্ধারণ
+  enemy.fallSide=Math.random()<0.5?-1:1;
+
+  // পতনের শুরুর অবস্থান সংরক্ষণ
+  enemy.fallStartY=enemy.root.position.y;
+  enemy.fallStartRotation=enemy.root.rotation.z;
+
+  // পতনের সময় আর আক্রমণ করবে না
+  enemy.cooldown=9999;
+  enemy.blocking=false;
+
+  playEffect(hitAudio);
+}
+
+ updateHUD();
+}
+
+/* =====================================================
+   ENEMY ARTIFICIAL INTELLIGENCE
+===================================================== */
+
+function enemyAI(enemy,dt){
+ if(enemy.dead)return;
+
+ enemy.cooldown=Math.max(
+  0,
+  enemy.cooldown-dt
+ );
+
+ const distance=enemy.root.position.distanceTo(
+  player.root.position
+ );
+
+ face(enemy,player);
+
+ if(
+  enemy.action==='hurt' &&
+  enemy.actionTime>0
+ ){
+  return;
+ }
+
+ if(distance>1.7){
+  enemy.action='walk';
+
+  const direction=player.root.position.clone()
+   .sub(enemy.root.position);
+
+  direction.y=0;
+
+  direction.normalize();
+
+  enemy.root.position.addScaledVector(
+   direction,
+   dt*1.25
+  );
+
+  clamp(enemy);
+ }
+
+ else if(enemy.cooldown<=0){
+  enemy.action=Math.random()<.68
+   ?'punch'
+   :'kick';
+
+  enemy.actionTime=.45;
+
+  enemy.cooldown=1.15+Math.random()*.45;
+
+  if(
+   !player.blocking &&
+   player.action!=='dodge'
+  ){
+   player.hp-=enemy.action==='kick'?10:7;
+
+   playEffect(hitAudio);
+
+   if(player.hp<=0){
+    finishGame();
+   }
+  }
+ }
+
+ else if(
+  enemy.action!=='punch' &&
+  enemy.action!=='kick'
+ ){
+  enemy.action='idle';
+ }
+}
+
+/* =====================================================
+   CHARACTER ANIMATIONS + ENEMY FALL
+===================================================== */
+
+function animateFighter(fighter,time,dt){
+
+ const limbs=fighter.limbs;
+
+ const walking=fighter.action==='walk';
+ const phase=time*7+fighter.phase;
+
+ const swing=walking
+  ?Math.sin(phase)*.46
+  :0;
+
+ let punch=0;
+ let kick=0;
+ let guard=0;
+
+ if(fighter.action==='punch'){
+  punch=Math.sin(
+   Math.min(1,1-fighter.actionTime/.4)*Math.PI
+  );
+ }
+
+ if(fighter.action==='kick'){
+  kick=Math.sin(
+   Math.min(1,1-fighter.actionTime/.4)*Math.PI
+  );
+ }
+
+ if(fighter.action==='block'){
+  guard=1;
+ }
+
+ /* =========================
+    DEFEATED ENEMY FALL
+ ========================= */
+
+ if(fighter.dead){
+
+  fighter.fallProgress=Math.min(
+   1,
+   (fighter.fallProgress||0)+dt/1.6
+  );
+
+  const t=fighter.fallProgress;
+
+  // Smooth falling motion
+  const ease=t*t*(3-2*t);
+
+  // Body falls sideways
+  fighter.body.rotation.z=
+   fighter.fallSide*ease*1.48;
+
+  // Body leans while falling
+  fighter.body.rotation.x=
+   -ease*.22;
+
+  // Lower the body toward the ground
+  fighter.body.position.y=
+   -ease*.80;
+
+  // Arms move outward during the fall
+  limbs.shoulderL.rotation.x=
+   -.5-ease*1.0;
+
+  limbs.shoulderR.rotation.x=
+   -.5-ease*.8;
+
+  limbs.shoulderL.rotation.z=
+   .15+ease*.8*fighter.fallSide;
+
+  limbs.shoulderR.rotation.z=
+   -.15+ease*.8*fighter.fallSide;
+
+  // Elbows bend naturally
+  limbs.elbowL.rotation.x=
+   -.2-ease*.7;
+
+  limbs.elbowR.rotation.x=
+   -.2-ease*.9;
+
+  // Legs move as balance is lost
+  limbs.hipL.rotation.x=
+   -ease*.75;
+
+  limbs.hipR.rotation.x=
+   ease*.55;
+
+  limbs.hipL.rotation.z=
+   -ease*.35*fighter.fallSide;
+
+  limbs.hipR.rotation.z=
+   -ease*.25*fighter.fallSide;
+
+  limbs.kneeL.rotation.x=
+   ease*.9;
+
+  limbs.kneeR.rotation.x=
+   ease*.65;
+
+  // Keep the defeated enemy lying down
+  if(t>=1){
+   fighter.body.rotation.z=
+    fighter.fallSide*1.48;
+
+   fighter.body.rotation.x=-.22;
+   fighter.body.position.y=-.80;
+  }
+
+  return;
+ }
+
+ /* =========================
+    NORMAL MOVEMENT ANIMATION
+ ========================= */
+
+ limbs.shoulderL.rotation.x=swing-guard*.7;
+ limbs.shoulderR.rotation.x=-swing-guard*.7;
+
+ limbs.shoulderL.rotation.z=.12+guard*.45;
+ limbs.shoulderR.rotation.z=-.12-guard*.45;
+
+ limbs.elbowL.rotation.x=-.2-guard*.65;
+ limbs.elbowR.rotation.x=-.2-guard*.65;
+
+ if(fighter.action==='punch'){
+  limbs.shoulderR.rotation.x=-1.55*punch;
+  limbs.elbowR.rotation.x=-.75*punch;
+ }
+
+ limbs.hipL.rotation.x=swing;
+ limbs.hipR.rotation.x=-swing;
+
+ limbs.kneeL.rotation.x=
+  Math.max(0,-swing)*.75;
+
+ limbs.kneeR.rotation.x=
+  Math.max(0,swing)*.75;
+
+ if(fighter.action==='kick'){
+  limbs.hipR.rotation.x=-1.25*kick;
+  limbs.kneeR.rotation.x=1.05*kick;
+ }
+
+ fighter.body.position.y=walking
+  ?Math.abs(Math.sin(phase*2))*.045
+  :0;
+
+ fighter.body.rotation.z=
+  fighter.action==='dodge'?.18:0;
+
+ fighter.body.rotation.x=0;
+
+ /* =========================
+    ACTION TIMER
+ ========================= */
+
+ fighter.actionTime=Math.max(
+  0,
+  fighter.actionTime-dt
+ );
+
+ if(
+  fighter.actionTime<=0 &&
+  [
+   'punch',
+   'kick',
+   'block',
+   'dodge',
+   'hurt'
+  ].includes(fighter.action)
+ ){
+  fighter.action='idle';
+  fighter.blocking=false;
+ }
+}
+
+/* =====================================================
+   ROUND PROGRESSION
+===================================================== */
+
+function checkRoundEnd(){
+ if(!playing||gameOver||transitioning)return;
+
+ if(
+  enemies.length &&
+  enemies.every(enemy=>enemy.dead)
+ ){
+  transitioning=true;
+  playing=false;
+
+  say(
+   bn(round)+' জন Habib King Kong পরাজিত!',
+   2.2
+  );
+
+  setTimeout(()=>{
+   if(
+    !gameOver &&
+    $('gameOverPanel').style.display!=='flex'
+   ){
+    round++;
+    spawnRound();
+  }
+  },2200);
+ }
+}
+
+/* =====================================================
+   ANALOG JOYSTICK
+===================================================== */
+
+const joystick=$('joystick');
+const stick=$('stick');
+
+function resetJoystick(){
+ joystickActive=false;
+
+ joyX=0;
+ joyY=0;
+
+ joyPointer=null;
+
+ stick.style.left=
+  (joystick.clientWidth-stick.offsetWidth)/2+'px';
+
+ stick.style.top=
+  (joystick.clientHeight-stick.offsetHeight)/2+'px';
+}
+
+function moveJoystick(event){
+ const rect=joystick.getBoundingClientRect();
+
+ const centerX=rect.left+rect.width/2;
+ const centerY=rect.top+rect.height/2;
+
+ let dx=event.clientX-centerX;
+ let dy=event.clientY-centerY;
+
+ const max=rect.width*.31;
+ const distance=Math.hypot(dx,dy);
+
+ if(distance>max){
+  dx=dx/distance*max;
+  dy=dy/distance*max;
+ }
+
+ joyX=dx/max;
+ joyY=dy/max;
+
+ stick.style.left=
+  (rect.width/2-stick.offsetWidth/2+dx)+'px';
+
+ stick.style.top=
+  (rect.height/2-stick.offsetHeight/2+dy)+'px';
+}
+
+joystick.addEventListener('pointerdown',event=>{
+ event.preventDefault();
+
+ if(!playing||paused)return;
+
+ joystickActive=true;
+ joyPointer=event.pointerId;
+
+ try{
+  joystick.setPointerCapture(event.pointerId);
+ }catch(error){}
+
+ moveJoystick(event);
+});
+
+joystick.addEventListener('pointermove',event=>{
+ if(
+  joystickActive &&
+  event.pointerId===joyPointer
+ ){
+  event.preventDefault();
+  moveJoystick(event);
+ }
+});
+
+function joystickEnd(event){
+ if(
+  joyPointer===null ||
+  event.pointerId===joyPointer
+ ){
+  resetJoystick();
+ }
+}
+
+joystick.addEventListener('pointerup',joystickEnd);
+joystick.addEventListener('pointercancel',joystickEnd);
+
+joystick.addEventListener('lostpointercapture',()=>{
+ resetJoystick();
+});
+
+/* =====================================================
+   CONTINUOUS PLAYER MOVEMENT
+===================================================== */
+
+function updateJoystick(dt){
+ if(
+  !joystickActive ||
+  !playing ||
+  paused ||
+  gameOver ||
+  transitioning
+ )return;
+
+ const magnitude=Math.hypot(joyX,joyY);
+
+ if(magnitude<.12)return;
+
+ /*
+  Right = turn right.
+  Left = turn left.
+  Up = move forward.
+  Down = move backward.
+ */
+
+ player.root.rotation.y-=joyX*dt*2.35;
+
+ const angle=player.root.rotation.y;
+
+ const forward=-joyY;
+
+ player.root.position.x+=
+  Math.sin(angle)*forward*dt*4.2;
+
+ player.root.position.z+=
+  Math.cos(angle)*forward*dt*4.2;
+
+ clamp(player);
+
+if(
+player.action==='idle' ||
+player.action==='walk'
+){
+player.action='walk';
+player.actionTime=.1;
+}
+
+// জয়স্টিকের দিক অনুযায়ী অডিও চালু
+updateMovementAudio();
+}
+ 
+
+/* =====================================================
+   FIGHTING BUTTON EVENTS
+===================================================== */
+
+document.querySelectorAll('[data-act]').forEach(button=>{
+ const action=button.dataset.act;
+
+ button.addEventListener('pointerdown',event=>{
+  event.preventDefault();
+
+  button.classList.add('active');
+
+  doAction(action);
+
+  if(action==='block'){
+   try{
+    button.setPointerCapture(event.pointerId);
+   }catch(error){}
+  }
+ });
+
+ const release=()=>{
+  button.classList.remove('active');
+
+  if(action==='block'){
+   player.blocking=false;
+
+   if(player.action==='block'){
+    player.action='idle';
+   }
+  }
+ };
+
+ button.addEventListener('pointerup',release);
+ button.addEventListener('pointercancel',release);
+ button.addEventListener('lostpointercapture',release);
+});
+
+/* =====================================================
+   KEYBOARD SUPPORT
+===================================================== */
+
+addEventListener('keydown',event=>{
+ if(event.repeat)return;
+
+ const movementKeys=[
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowUp',
+  'ArrowDown',
+  'a','d','w','s'
+ ];
+
+ if(movementKeys.includes(event.key)){
+  event.preventDefault();
+
+  joystickActive=true;
+
+  joyX=
+   ['ArrowLeft','a'].includes(event.key)?-1:
+   ['ArrowRight','d'].includes(event.key)?1:
+   0;
+
+  joyY=
+   ['ArrowUp','w'].includes(event.key)?-1:
+   ['ArrowDown','s'].includes(event.key)?1:
+   0;
+ }
+
+ else if(event.key==='j'){
+  doAction('punch');
+ }
+
+ else if(event.key==='k'){
+  doAction('kick');
+ }
+
+ else if(event.key==='l'){
+  doAction('block');
+ }
+
+ else if(event.key===' '){
+  doAction('dodge');
+ }
+});
+
+addEventListener('keyup',event=>{
+ if([
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowUp',
+  'ArrowDown',
+  'a','d','w','s'
+ ].includes(event.key)){
+  joystickActive=false;
+  joyX=0;
+  joyY=0;
+ }
+
+ if(event.key==='l'){
+  player.blocking=false;
+
+  if(player.action==='block'){
+   player.action='idle';
+  }
+ }
+});
+
+/* =====================================================
+   PAUSE / RESUME
+===================================================== */
+
+$('pauseGame').onclick=()=>{
+ if(!playing||gameOver)return;
+
+ paused=!paused;
+
+ $('pauseGame').textContent=
+  paused?'▶ RESUME':'⏸ PAUSE';
+
+ if(paused){
+  stopAudio(moveVoice);
+  stopAudio(music);
+  stopAudio(ambienceAudio);
+ }else{
+  if(musicEnabled)safePlay(music);
+  if(ambienceEnabled)safePlay(ambienceAudio);
+ }
+
+ say(
+  paused?'GAME PAUSED':'RESUMED',
+  1.2
+ );
+};
+
+/* =====================================================
+   START GAME
+===================================================== */
+
+/* ===== LOADING SCREEN START ===== */
+
+let loadingTimer=null;
+
+function startArenaLoading(){
+
+ if(loadingTimer!==null){
+  clearInterval(loadingTimer);
+  loadingTimer=null;
+ }
+
+ playing=false;
+ paused=false;
+ gameOver=false;
+ transitioning=false;
+
+ resetJoystick();
+
+ $('home').style.display='none';
+ $('gameOverPanel').style.display='none';
+ $('hud').style.display='none';
+ $('controls').style.display='none';
+ $('gameButtons').style.display='none';
+ $('exitGame').style.display='none';
+
+ const screen=$('loadingScreen');
+ const bar=$('loadingBar');
+ const percent=$('loadingStatusPercent');
+ const status=$('loadingStatus');
+
+ screen.style.display='flex';
+ bar.style.width='0%';
+ percent.textContent='0%';
+ status.textContent='PREPARING ARENA...';
+
+ const messages=[
+  {at:0,text:'PREPARING ARENA...'},
+  {at:20,text:'LOADING CHARACTERS...'},
+  {at:40,text:'BUILDING 3D ENVIRONMENT...'},
+  {at:60,text:'PREPARING OPPONENTS...'},
+  {at:80,text:'FINALIZING GAME...'},
+  {at:95,text:'GET READY TO FIGHT!'}
+ ];
+
+ const duration=8000;
+ const startTime=performance.now();
+
+ loadingTimer=setInterval(()=>{
+
+  const elapsed=performance.now()-startTime;
+  const progress=Math.min(
+   100,
+   Math.floor(elapsed/duration*100)
+  );
+
+  bar.style.width=progress+'%';
+  percent.textContent=progress+'%';
+
+  let currentMessage=messages[0].text;
+
+  for(const item of messages){
+   if(progress>=item.at){
+    currentMessage=item.text;
+   }
+  }
+
+  status.textContent=currentMessage;
+
+  if(progress>=100){
+
+   clearInterval(loadingTimer);
+   loadingTimer=null;
+
+   screen.style.display='none';
+
+   launchArenaGame();
+  }
+
+ },50);
+}
+
+function launchArenaGame(){
+
+ unlockAudio();
+
+ playerCharacter=Number(
+  $('characterSelect').value
+ );
+
+ if(player.index!==playerCharacter){
+
+  const position=player.root.position.clone();
+  const rotation=player.root.rotation.y;
+
+  disposeFighter(player);
+
+  player=createFighter(
+   true,
+   playerCharacter
+  );
+
+  player.root.position.copy(position);
+  player.root.rotation.y=rotation;
+ }
+
+ setArena($('arenaSelect').value,false);
+ setWeather($('weatherSelect').value,false);
+ setCameraMode($('cameraSelect').value,false);
+
+ $('home').style.display='none';
+ $('gameOverPanel').style.display='none';
+
+ $('hud').style.display='flex';
+ $('controls').style.display='flex';
+ $('gameButtons').style.display='flex';
+ $('exitGame').style.display='block';
+
+ round=1;
+
+ spawnRound();
+
+ startGameAudio();
+
+ resetJoystick();
+}
+
+$('enterArena').onclick=()=>{
+ unlockAudio();
+ startArenaLoading();
+};
+
+/* ===== LOADING SCREEN END ===== */
+
+/* =====================================================
+   RETRY
+===================================================== */
+
+$('retryGame').onclick=()=>{
+ unlockAudio();
+
+ $('gameOverPanel').style.display='none';
+
+ round=1;
+
+ spawnRound();
+
+ startGameAudio();
+
+ resetJoystick();
+
+ $('pauseGame').textContent='⏸ PAUSE';
+};
+
+/* =====================================================
+   RETURN TO MENU
+===================================================== */
+
+$('gameOverMenu').onclick=()=>{
+ $('gameOverPanel').style.display='none';
+ returnHome();
+};
+
+$('exitGame').onclick=()=>{
+ if(soundEnabled){
+  safePlay(backVoice,true);
+ }
+ returnHome();
+};
+
+function returnHome(){
+ playing=false;
+ transitioning=false;
+ paused=false;
+ gameOver=false;
+
+ resetJoystick();
+
+ $('home').style.display='block';
+
+ $('hud').style.display='none';
+ $('controls').style.display='none';
+ $('gameButtons').style.display='none';
+ $('exitGame').style.display='none';
+
+ $('message').textContent='';
+
+ $('pauseGame').textContent='⏸ PAUSE';
+
+ stopGameAudio();
+}
+
+/* =====================================================
+   MAIN RENDER LOOP
+===================================================== */
+
+function animate(now){
+ requestAnimationFrame(animate);
+
+ const dt=Math.min(
+  .035,
+  Math.max(.001,(now-last)/1000||.016)
+ );
+
+ last=now;
+
+ const time=now/1000;
+
+ if(playing&&!paused&&!gameOver){
+  player.cooldown=Math.max(
+   0,
+   player.cooldown-dt
+  );
+
+  updateJoystick(dt);
+
+  for(let i=0;i<enemies.length;i++){
+   if(!gameOver){
+    enemyAI(enemies[i],dt);
+   }
+  }
+
+  animateFighter(player,time,dt);
+
+  for(let i=0;i<enemies.length;i++){
+   animateFighter(enemies[i],time,dt);
+  }
+
+  checkRoundEnd();
+
+  updateHUD();
+
+  const target=nearestEnemy();
+
+  const focus=player.root.position.clone();
+
+  if(target){
+   focus.lerp(target.root.position,.2);
+  }
+
+  let desired;
+
+  if(cameraMode==='top'){
+   desired=new THREE.Vector3(
+    focus.x,
+    17,
+    focus.z+.1
+   );
+  }else{
+   const angle=player.root.rotation.y;
+
+   desired=new THREE.Vector3(
+    player.root.position.x-Math.sin(angle)*6,
+    4.1,
+    player.root.position.z-Math.cos(angle)*6
+   );
+  }
+
+  camera.position.lerp(
+   desired,
+   Math.min(1,dt*3)
+  );
+
+  camera.lookAt(
+   focus.x,
+   cameraMode==='top'?0:1.1,
+   focus.z
+  );
+ }
+
+ else if(!paused){
+  animateFighter(player,time,dt);
+
+  for(let i=0;i<enemies.length;i++){
+   animateFighter(enemies[i],time,dt);
+  }
+ }
+
+ /* Rain animation */
+
+ if(rain&&rainVelocity&&!paused){
+  const positions=rain.geometry.attributes.position.array;
+
+  for(let i=0;i<rainVelocity.length;i++){
+   positions[i*3+1]-=rainVelocity[i]*dt;
+
+   if(positions[i*3+1]<0){
+    positions[i*3+1]=16+Math.random()*4;
+
+    positions[i*3]=(Math.random()-.5)*35;
+
+    positions[i*3+2]=(Math.random()-.5)*35;
+   }
+  }
+
+  rain.geometry.attributes.position.needsUpdate=true;
+ }
+
+ /* Message timer */
+
+ if(messageTime>0&&!paused){
+  messageTime-=dt;
+
+  if(messageTime<=0){
+   $('message').textContent='';
+  }
+ }
+
+ renderer.render(scene,camera);
+}
+
+/* =====================================================
+   RESIZE
+===================================================== */
+
+addEventListener('resize',()=>{
+ camera.aspect=innerWidth/innerHeight;
+
+ camera.updateProjectionMatrix();
+
+ renderer.setSize(
+  innerWidth,
+  innerHeight
+ );
+
+ renderer.setPixelRatio(
+  Math.min(devicePixelRatio||1,1.1)
+ );
+
+ resetJoystick();
+});
+
+/* =====================================================
+   INITIAL SETUP
+===================================================== */
+
+setArena(0,false);
+
+setWeather('clear',false);
+
+updateHUD();
+
+updateAudioVolume();
+
+loadEnemyFace();
+
+requestAnimationFrame(animate);
+
+})();
+</script>
+
+</body>
+</html>
